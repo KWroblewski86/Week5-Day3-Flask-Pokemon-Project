@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+    
+
+{% block content %}
+    <h1>Welcome Pokemon Master</h1>
+    <br>
+    <h5>Which pokemon will you choose today?</h5>
+    <br>
+
+    <ul>
+        {% for c in characters %}
+
+        <li>{{ c }}</li>
+
+        {% endfor %}
+    </ul>
+
+    <br>
+    <h4><b>Gotta catch 'em all! and I choose you.</b></h4>
+    <img src="https://archives.bulbagarden.net/media/upload/thumb/f/fc/Ashball.png/250px-Ashball.png">
+    <br>
+    <a href="/pokemon">Pokemon</a>
+
+{% endblock %}
