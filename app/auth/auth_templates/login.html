@@ -1,7 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<h1>LOGIN</h1>
+<form method="POST">
+    {{ x.hidden_tag() }}
 
+    {{ x.username(class='form-control', placeholder='Username') }}
+    {{ x.password(class='form-control', placeholder='Password') }}
+    {{ x.submit(class='btn btn-primary', placeholder='Submit') }}
+</form>
 
 
 {% endblock %}
