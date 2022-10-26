@@ -3,15 +3,39 @@
 {% block content %}
 
 
+<div class="row">
 <h1>CATCH YOUR POKEMON</h1>
+</div>
 <br>
+<div class="row">
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <fieldset id="pokemon-field">
+        {{ form.pokemon.label }}
+        {{ form.pokemon(class='form-control', placeholder='Enter Pokemon Name') }}
+        {{ form.submit(class='btn btn-primary', placeholder='Submit') }}</fieldset>
+    </form>
+</div>
 
-<form method="POST">
-    {{ form.hidden_tag() }}
-
-    {{ form.poke_name(class='form-control', placeholder='Enter Pokemon Name') }}
-    {{ form.submit(class='btn btn-primary', placeholder='Submit') }}
-</form>
+<div class="row">
+    <div class="card" style="width: 18rem;">
+        <img src="{{poke.img_url}}" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">{{poke.name}}</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+                content.</p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">An item</li>
+            <li class="list-group-item">A second item</li>
+            <li class="list-group-item">A third item</li>
+        </ul>
+        <div class="card-body">
+            <a href="#" class="card-link">Card link</a>
+            <a href="#" class="card-link">Another link</a>
+        </div>
+    </div>
+</div>
 
 
 {% endblock %}

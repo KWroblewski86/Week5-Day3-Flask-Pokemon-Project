@@ -21,7 +21,7 @@ def signMeUP():
 
             print(first_name, last_name, username, email, password)
 
-            user = User(first_name, last_name, username, email, password,)
+            user = User(first_name, last_name, username, email, password)
 
             user.saveToDB()
             

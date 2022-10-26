@@ -1,3 +1,4 @@
+from email.policy import default
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 from datetime import datetime
@@ -6,25 +7,10 @@ from werkzeug.security import generate_password_hash
 db = SQLAlchemy()
 
 
-team = db.Table(
-    'team',
-    db.Column('team_id', db.Integer, primary_key=True),
-    db.Column('user_id', db.Integer, db.ForeignKey('user.id'), nullable=False),
-    db.Column('name', db.String, nullable=False)
-)
-
 pokedex = db.Table(
     'pokedex',
-    db.Column('team_id', db.Integer, db.ForeignKey('team.team_id')),
-    db.Column('poke_id', db.Integer, db.ForeignKey('pokemon.poke_id')),
-    db.Column('win_count', db.Integer, db.ForeignKey('user.id')),
-    db.Column('loss_count', db.Integer, db.ForeignKey('user.id'))
-)
-
-poke_type = db.Table(
-    'poke type',
-    db.Column('poke_id', db.Integer, db.ForeignKey('pokemon.poke_id')),
-    db.Column('type_id', db.Integer, db.ForeignKey('type.type_id'))
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
+    db.Column('poke_id', db.Integer, db.ForeignKey('pokemon.poke_id'))
 )
 
 
@@ -35,7 +21,8 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(50), nullable=False, unique=True)
     email = db.Column(db.String(150), nullable=False, unique=True)
     password = db.Column(db.String(250), nullable=False)
-    
+    win_count = db.Column(db.Integer, default=0)
+    loss_count = db.Column(db.Integer, default=0)
 
 
     def __init__(self, first_name, last_name, username, email, password):
@@ -62,16 +49,18 @@ class Pokemon(db.Model):
     attack = db.Column(db.Integer, nullable=False)
     hp = db.Column(db.Integer, nullable=False)
     defense = db.Column(db.Integer, nullable=False)
+    id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    base_exp = db.Column(db.String)
 
 
-    def __init__(self, poke_id, name, ability, img_url, attack, hp, defense):
-        self.poke_id = poke_id
+    def __init__(self, name, ability, img_url, attack, hp, defense, base_exp):
         self.name = name
         self.ability = ability
         self.img_url = img_url
         self.attack = attack
         self.hp = hp
         self.defense = defense
+        self.base_exp = base_exp 
 
 
     def saveToDB(self):
