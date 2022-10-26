@@ -25,5 +25,5 @@ db.init_app(app)
 migrate = Migrate(app, db)
 login.init_app(app)
 
-from . import routes
+from .main import routes
 from . import models

@@ -1,5 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from flask_login import login_user, logout_user, current_user
+
+import app
 from .forms import LoginForm, UserCreationForm
 from app.models import User
 from werkzeug.security import check_password_hash
@@ -19,7 +21,7 @@ def signMeUP():
 
             print(first_name, last_name, username, email, password)
 
-            user = User(first_name, last_name, username, email, password)
+            user = User(first_name, last_name, username, email, password,)
 
             user.saveToDB()
             
