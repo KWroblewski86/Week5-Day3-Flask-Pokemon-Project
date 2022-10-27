@@ -23,6 +23,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(250), nullable=False)
     win_count = db.Column(db.Integer, default=0)
     loss_count = db.Column(db.Integer, default=0)
+    pokemon = db.relationship("Pokemon", secondary=pokedex, backref="trainer")
 
 
     def __init__(self, first_name, last_name, username, email, password):
@@ -49,7 +50,6 @@ class Pokemon(db.Model):
     attack = db.Column(db.Integer, nullable=False)
     hp = db.Column(db.Integer, nullable=False)
     defense = db.Column(db.Integer, nullable=False)
-    id = db.Column(db.Integer, db.ForeignKey('user.id'))
     base_exp = db.Column(db.String)
 
 

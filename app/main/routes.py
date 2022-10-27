@@ -1,6 +1,4 @@
-import requests as r
-from unicodedata import name
-from urllib import response
+import requests
 from app import app
 from flask import render_template, request
 from app.main.forms import getPokemonForm
@@ -20,31 +18,27 @@ def homePage():
 @app.route('/pokemon', methods=["GET", "POST"])
 def characterPage():
 
-    print('in character page')
     form = getPokemonForm()
-    print('after form')
     if request.method=="POST":
-        print("test")
+        
         if form.validate():
+            
             poke_name = form.pokemon.data
-            submit = form.submit.data
+            # submit = form.submit.data
             
-            
-            poke = Pokemon.query.filter(Pokemon.name==poke_name).first()
+            poke = Pokemon.query.filter_by(name=poke_name).first()
 
             if poke:
-                return render_template('pokemon.html', form=form, poke_info=poke_name)
+                return render_template('pokemon.html', form=form, poke=poke)
 
 
-            url = f"https://pokeapi.co/api/v2/pokemon/{name}"
-            request.get(url)
-            response = request.get(url)
-
+            url = f"https://pokeapi.co/api/v2/pokemon/{poke_name}"
+            response = requests.get(url)
             if response.ok:
                 data = response.json()
                 characterPage = {}
-                characterPage[name.title()] = {
-                    'sprite': data['sprites']['other']['official-artwork']['front default'],
+                characterPage[poke_name.title()] = {
+                    'sprite': data['sprites']['other']['official-artwork']['front_default'],
                     'base_exp': data['base_experience'],
                     'ability': data['abilities'][0]['ability']['name'],
                     'base_hp': data['stats'][0]['base_stat'],
@@ -58,7 +52,8 @@ def characterPage():
                 base_att = characterPage[poke_name.title()]['base_att']
                 base_def = characterPage[poke_name.title()]['base_def']
 
-            poke = Pokemon(name, ability, img_url, base_att, base_hp, base_def, base_exp)
+            poke = Pokemon(poke_name, ability, img_url, base_att, base_hp, base_def, base_exp)
+            print(poke)
             poke.saveToDB()
 
             return render_template('pokemon.html', form=form, poke=poke)
@@ -67,5 +62,4 @@ def characterPage():
             # user = User(poke_name, submit)
             # user.saveToDB()
 
-        return render_template('pokemon.html', poke_info=poke_name, form=form)
-    return print('finished')
+    return render_template('pokemon.html', form=form)
