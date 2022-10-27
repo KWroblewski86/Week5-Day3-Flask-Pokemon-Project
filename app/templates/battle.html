@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<h1><strong>ARE YOU READY</strong></h1>
+
+
+<div class="card" style="width: 18rem;">
+    <ul class="list-group list-group-flush">
+        {% for u in users %}
+            {% if u.username != current_user.username%}
+
+        <li class="list-group-item">
+            {{ u.username }}
+            <button class="btn btn-danger">Attack</button>
+        </li>
+
+            {% endif %}
+        {% endfor %}
+
+
+    </ul>
+</div>
+
+
+
+
+
+{% endblock %}

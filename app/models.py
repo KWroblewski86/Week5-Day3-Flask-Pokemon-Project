@@ -9,6 +9,7 @@ db = SQLAlchemy()
 
 pokedex = db.Table(
     'pokedex',
+    db.Column('current_user.id', db.Integer),
     db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
     db.Column('poke_id', db.Integer, db.ForeignKey('pokemon.poke_id'))
 )

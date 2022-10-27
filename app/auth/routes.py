@@ -8,7 +8,7 @@ from werkzeug.security import check_password_hash
 
 auth = Blueprint('auth', __name__, template_folder='auth_templates')
 
-@auth.route('/signup', methods=["GET", "POST"])
+@auth.route('/', methods=["GET", "POST"])
 def signMeUP():
     form = UserCreationForm()
     if request.method == "POST":
@@ -61,3 +61,4 @@ def logMeIn():
 def logMeOut():
     logout_user()
     return redirect(url_for('auth.logMeIn'))
+

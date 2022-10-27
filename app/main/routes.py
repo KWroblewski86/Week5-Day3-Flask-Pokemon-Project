@@ -2,11 +2,11 @@ import requests
 from app import app
 from flask import render_template, request
 from app.main.forms import getPokemonForm
-from app.models import Pokemon, User
+from app.models import Pokemon, User, pokedex
 
 
 
-@app.route('/')
+@app.route('/home')
 def homePage():
     characters = ['Pikachu', 'Bulbasaur', 'Charmander', 'Charizard', 'Kadabra', 'Spearow', 'Pidgeot', 'or so many others!!']
     
@@ -63,3 +63,40 @@ def characterPage():
             # user.saveToDB()
 
     return render_template('pokemon.html', form=form)
+
+
+
+
+@app.route('/battle')
+def battlePage():
+    users = User.query.all()
+    
+    
+    
+    return render_template('battle.html', users=users)
+
+
+
+@app.route('/attack/<int:user_id>')
+def attackUser(user_id):
+    p = pokedex()
+    p.save()
+    
+
+    return
+
+
+
+
+# Link pokemon to user
+# Click catch button
+# Pass pokemon name from front end to back end
+# Use name to query database to initialize 
+# Does current user already have pokemon
+    # if pokemon is in user.pokemon(does user already have it)
+# Check amount of pokemon current user has
+    # if user.pokemon.count() < 5:
+        #catch
+
+
+
